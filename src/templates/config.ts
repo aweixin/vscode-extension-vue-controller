@@ -1,5 +1,5 @@
 export const configTemplate = (folderPath: string) => {
       const _name = folderPath + "Config"
-      return `export const ${_name} = {     
+      return `export const ${_name} = {
 }`
 }

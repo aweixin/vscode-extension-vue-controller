@@ -2,7 +2,7 @@
       "name": "vue-controller",
       "displayName": "vue-controller",
       "description": "本插件是基于vsCode创建vue 项目的插件 ，模拟 `Laravel` 的 一键创建：控制器、模型、视图、路由、配置文件等操作",
-      "version": "0.0.1",
+      "version": "0.0.4",
       "icon": "assets/logo.jpeg",
       "publisher": "aweixin",
       "engines": {
@@ -11,6 +11,19 @@
       "categories": [
             "Other"
       ],
+      "keywords": [
+            "vue",
+            "控制器",
+            "模型",
+            "视图",
+            "路由",
+            "配置文件"
+      ],
+      "author": {
+            "email": "linuxzhixin@gmail.com",
+            "name": "aweixin",
+            "url": "https://github.com/aweixin"
+      },
       "repository": {
             "type": "git",
             "url": "https://github.com/aweixin/vscode-extension-vue-controller"
