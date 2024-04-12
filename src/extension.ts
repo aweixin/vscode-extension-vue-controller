@@ -52,7 +52,7 @@ export function activate(context: vscode.ExtensionContext) {
                         // config
                         vscode.workspace.fs.writeFile(vscode.Uri.file(config), Buffer.from(configTemplate(input)))
                         // router
-                        vscode.workspace.fs.writeFile(vscode.Uri.file(router), Buffer.from(routerTemplate(input)))
+                        vscode.workspace.fs.writeFile(vscode.Uri.file(router), Buffer.from(routerTemplate(e.path, input)))
                         // component
                         vscode.workspace.fs.writeFile(vscode.Uri.file(component), Buffer.from(componentTemplate()))
 
