@@ -39,6 +39,8 @@ export function activate(context: vscode.ExtensionContext) {
                         const request = folderPath + "/request/request.ts"
                         const router = folderPath + "/router/router.ts"
                         const config = folderPath + "/config/config.ts"
+                        const _interface = folderPath + "/interface/interface.ts"
+
                         // view
                         vscode.workspace.fs.writeFile(vscode.Uri.file(view), Buffer.from(viewTemplate(input)))
                         // controller
@@ -49,6 +51,8 @@ export function activate(context: vscode.ExtensionContext) {
                         vscode.workspace.fs.writeFile(vscode.Uri.file(config), Buffer.from(configTemplate()))
                         // router
                         vscode.workspace.fs.writeFile(vscode.Uri.file(router), Buffer.from(routerTemplate(e.path, input)))
+                        // interface
+                        vscode.workspace.fs.writeFile(vscode.Uri.file(_interface), Buffer.from(""))
 
                         vscode.window.showInformationMessage("文件夹和文件已创建")
                   }

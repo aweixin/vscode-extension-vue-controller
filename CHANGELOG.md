@@ -6,6 +6,8 @@
 - 优化 create vue controller 使用class 创建 controller config request
 - 优化 create vue controller index.vue 中自动引入 controller config request
 
+## 0.0.12
+- interface 新增 interface.ts 声明 typescript 类型
 
 ## 0.0.10
 - 新增create vue router 在views 目录下创建 pageRouter.ts 文件 里面包含了所有页面路由
