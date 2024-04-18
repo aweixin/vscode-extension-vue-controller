@@ -1,5 +1,8 @@
 # vue-container 
 
+## 0.0.14
+- 优化 create vue router 询问是否包含所有路由文件 no(会忽略 `authentication` 文件夹下面的路由文件 )
+
 ## 0.0.11
 - 删除 create vue controller 在views 目录下创建 component 文件 (自行创建)
 - 优化 create vue router 必须在views目录进行操作，适配多级目录

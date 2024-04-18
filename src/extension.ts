@@ -72,13 +72,15 @@ export function activate(context: vscode.ExtensionContext) {
                   fs.writeFileSync(routersPath, "")
             }
 
+            // 询问是否覆盖
+            const result = await vscode.window.showInformationMessage("是否获取所有Router文件", "yes", "no")
+
             // 路由引入数据
             const routers: string[] = []
             // 路由导出数据
             const routerExport: string[] = []
 
-            findRouterFiles(e.path, routers, routerExport)
-            console.log(routers, routerExport)
+            findRouterFiles(e.path, routers, routerExport, result)
 
             const body = "// 路由配置文件\n" + routers.join("\n") + "\n" + `export default [${routerExport}]`
 

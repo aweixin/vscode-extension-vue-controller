@@ -17,10 +17,16 @@ export const create = async () => {
 }
 
 // 获取文件路径下所有目录
-export const getDirs = (path: string) => {
-      return fs.readdirSync(path).filter((file) => {
+export const getDirs = (path: string, result?: string) => {
+      const dirs = fs.readdirSync(path).filter((file) => {
             return fs.statSync(path + "/" + file).isDirectory()
       })
+      if (result === "no") {
+            return dirs.filter((dir) => {
+                  return dir !== "authentication"
+            })
+      }
+      return dirs
 }
 
 /**
@@ -29,15 +35,15 @@ export const getDirs = (path: string) => {
  * @param routerFiles 路由文件
  * @param routerExport 路由导出
  */
-export const findRouterFiles = (viewDir: string, routerFiles: string[] = [], routerExport: string[] = []) => {
+export const findRouterFiles = (viewDir: string, routerFiles: string[] = [], routerExport: string[] = [], result?: string) => {
       // 获取文件夹下的所有文件夹
-      const dirs = getDirs(viewDir)
+      const dirs = getDirs(viewDir, result)
       dirs.forEach((dir) => {
             const dirPathRouter = viewDir + "/" + dir + "/router/router.ts"
             if (fs.existsSync(dirPathRouter)) {
                   const dirFromPath = viewDir + "/" + dir + "/router/router"
                   const _formPath = "@/views" + dirFromPath.split("views")[1]
-                  routerFiles.push(`import { ${dir}Routes } from '${_formPath}'`)
+                  routerFiles.push(`import { ${dir}Routes } from "${_formPath}"`)
                   routerExport.push(`...${dir}Routes`)
             } else {
                   // 存在子目录
