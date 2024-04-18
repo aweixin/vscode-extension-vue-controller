@@ -65,17 +65,28 @@ export function activate(context: vscode.ExtensionContext) {
             const folderPath = e.path.split("/").pop()
             //  当前目录下所有文件夹
             const folders = fs.readdirSync(e.path)
+            const routersPath = e.path + "/" + "pageRouters.ts"
+            // 文件不存在则创建
+            if (!fs.existsSync(routersPath)) {
+                  fs.writeFileSync(routersPath, "")
+            }
+
             const routers: string[] = []
+            const routerExport: string[] = []
             folders.forEach((item) => {
                   const _path = e.path + "/" + item
                   if (fs.statSync(_path).isDirectory()) {
-                        routers.push(`import { ${item}Routes } from "../${folderPath}/${item}/router/router"`)
+                        routers.push(`import { ${item}Routes } from "@/${folderPath}/${item}/router/router"`)
+                        routerExport.push(`...${item}Routes`)
                   }
             })
 
-            // 复制到剪切板
-            vscode.env.clipboard.writeText(routers.join("\n"))
-            vscode.window.showInformationMessage("路由已复制到剪切板")
+            const body = "// 路由配置文件\n" + routers.join("\n") + "\n" + `export default [${routerExport}]`
+
+            // routersPath 文件中append router
+            fs.writeFileSync(routersPath, body)
+
+            vscode.window.showInformationMessage("路由文件已创建")
       })
 
       context.subscriptions.push(disposable)
