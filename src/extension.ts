@@ -5,8 +5,7 @@ import { controllerTemplate } from "./templates/controller"
 import { configTemplate } from "./templates/config"
 import { requestTemplate } from "./templates/request"
 import { routerTemplate } from "./templates/router"
-import { create } from "./utils"
-import { componentTemplate } from "./templates/component"
+import { create, findRouterFiles } from "./utils"
 
 export function activate(context: vscode.ExtensionContext) {
       let disposable = vscode.commands.registerCommand("extension.createFolderAndFile", async (e) => {
@@ -23,8 +22,6 @@ export function activate(context: vscode.ExtensionContext) {
 				router.ts	路由文件
 			config
 				config.ts	配置文件
-                  components
-                        index.vue 组件文件
 		*/
 
             if (input) {
@@ -42,7 +39,6 @@ export function activate(context: vscode.ExtensionContext) {
                         const request = folderPath + "/request/request.ts"
                         const router = folderPath + "/router/router.ts"
                         const config = folderPath + "/config/config.ts"
-                        const component = folderPath + "/components/index.vue"
                         // view
                         vscode.workspace.fs.writeFile(vscode.Uri.file(view), Buffer.from(viewTemplate(input)))
                         // controller
@@ -50,11 +46,9 @@ export function activate(context: vscode.ExtensionContext) {
                         // request
                         vscode.workspace.fs.writeFile(vscode.Uri.file(request), Buffer.from(requestTemplate(input)))
                         // config
-                        vscode.workspace.fs.writeFile(vscode.Uri.file(config), Buffer.from(configTemplate(input)))
+                        vscode.workspace.fs.writeFile(vscode.Uri.file(config), Buffer.from(configTemplate()))
                         // router
                         vscode.workspace.fs.writeFile(vscode.Uri.file(router), Buffer.from(routerTemplate(e.path, input)))
-                        // component
-                        vscode.workspace.fs.writeFile(vscode.Uri.file(component), Buffer.from(componentTemplate()))
 
                         vscode.window.showInformationMessage("文件夹和文件已创建")
                   }
@@ -63,23 +57,24 @@ export function activate(context: vscode.ExtensionContext) {
 
       let copyRouters = vscode.commands.registerCommand("extension.createRouters", async (e) => {
             const folderPath = e.path.split("/").pop()
-            //  当前目录下所有文件夹
-            const folders = fs.readdirSync(e.path)
+            if (folderPath !== "views") {
+                  vscode.window.showErrorMessage("当前目录不是views目录")
+                  throw new Error("当前目录不是views目录")
+            }
+
+            // 判断views是否存在pageRouters.ts 没有则创建
             const routersPath = e.path + "/" + "pageRouters.ts"
-            // 文件不存在则创建
             if (!fs.existsSync(routersPath)) {
                   fs.writeFileSync(routersPath, "")
             }
 
+            // 路由引入数据
             const routers: string[] = []
+            // 路由导出数据
             const routerExport: string[] = []
-            folders.forEach((item) => {
-                  const _path = e.path + "/" + item
-                  if (fs.statSync(_path).isDirectory()) {
-                        routers.push(`import { ${item}Routes } from "@/${folderPath}/${item}/router/router"`)
-                        routerExport.push(`...${item}Routes`)
-                  }
-            })
+
+            findRouterFiles(e.path, routers, routerExport)
+            console.log(routers, routerExport)
 
             const body = "// 路由配置文件\n" + routers.join("\n") + "\n" + `export default [${routerExport}]`
 

@@ -1,8 +1,9 @@
 export const controllerTemplate = (folderPath: string) => {
       const _name = folderPath + "Controller"
-      return `export const ${_name} = {
-      index: () => {
-            return "Hello World"
-      },
-}`
+      return `class ${_name} {
+      constructor() {
+            console.log('hello world!');
+      }
+}
+export default new ${_name}()`
 }

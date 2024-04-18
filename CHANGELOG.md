@@ -1,8 +1,12 @@
-# Change Log
+# vue-container 
 
-All notable changes to the "vue-controller" extension will be documented in this file.
+## 0.0.11
+- 删除 create vue controller 在views 目录下创建 component 文件 (自行创建)
+- 优化 create vue router 必须在views目录进行操作，适配多级目录
+- 优化 create vue controller 使用class 创建 controller config request
+- 优化 create vue controller index.vue 中自动引入 controller config request
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+
 ## 0.0.10
 - 新增create vue router 在views 目录下创建 pageRouter.ts 文件 里面包含了所有页面路由
 

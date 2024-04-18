@@ -13,9 +13,9 @@ export default {
 </script>
 
 <script setup lang="ts">
-      import { ${folderPath}Config } from "../config/config"
-      import { ${folderPath}Controller } from "../controller/index"
-      import { ${folderPath}Request } from "../request/request"
+      import ${folderPath}Config from "../config/config"
+      import ${folderPath}Controller from "../controller/index"
+      import ${folderPath}Request from "../request/request"
 
 </script>
 
