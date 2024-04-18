@@ -37,7 +37,7 @@ export const findRouterFiles = (viewDir: string, routerFiles: string[] = [], rou
             if (fs.existsSync(dirPathRouter)) {
                   const dirFromPath = viewDir + "/" + dir + "/router/router"
                   const _formPath = "@/views" + dirFromPath.split("views")[1]
-                  routerFiles.push(`import { ${dir}Routes } from ${_formPath}`)
+                  routerFiles.push(`import { ${dir}Routes } from '${_formPath}'`)
                   routerExport.push(`...${dir}Routes`)
             } else {
                   // 存在子目录
