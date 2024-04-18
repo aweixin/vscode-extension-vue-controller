@@ -38,6 +38,7 @@ export const getDirs = (path: string, result?: string) => {
 export const findRouterFiles = (viewDir: string, routerFiles: string[] = [], routerExport: string[] = [], result?: string) => {
       // 获取文件夹下的所有文件夹
       const dirs = getDirs(viewDir, result)
+      console.log(dirs)
       dirs.forEach((dir) => {
             const dirPathRouter = viewDir + "/" + dir + "/router/router.ts"
             if (fs.existsSync(dirPathRouter)) {
@@ -50,4 +51,33 @@ export const findRouterFiles = (viewDir: string, routerFiles: string[] = [], rou
                   findRouterFiles(viewDir + "/" + dir, routerFiles, routerExport)
             }
       })
+}
+
+// 创建路由文件
+export const createRouters = async (_path: string) => {
+      const folderPath = _path.split("/").pop()
+      if (folderPath !== "views") {
+            vscode.window.showErrorMessage("当前目录不是views目录")
+            throw new Error("当前目录不是views目录")
+      }
+
+      // 判断views是否存在pageRouters.ts 没有则创建
+      const routersPath = _path + "/" + "pageRouters.ts"
+      if (!fs.existsSync(routersPath)) {
+            fs.writeFileSync(routersPath, "")
+      }
+
+      // 路由引入数据
+      const routers: string[] = []
+      // 路由导出数据
+      const routerExport: string[] = []
+
+      findRouterFiles(_path, routers, routerExport, "no")
+
+      const body = "// 路由配置文件\n" + routers.join("\n") + "\n" + `export default [${routerExport}]`
+
+      // routersPath 文件中append router
+      fs.writeFileSync(routersPath, body)
+
+      vscode.window.showInformationMessage("路由文件已创建")
 }

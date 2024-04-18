@@ -5,7 +5,7 @@ import { controllerTemplate } from "./templates/controller"
 import { configTemplate } from "./templates/config"
 import { requestTemplate } from "./templates/request"
 import { routerTemplate } from "./templates/router"
-import { create, findRouterFiles } from "./utils"
+import { create, createRouters, findRouterFiles } from "./utils"
 
 export function activate(context: vscode.ExtensionContext) {
       let disposable = vscode.commands.registerCommand("extension.createFolderAndFile", async (e) => {
@@ -54,40 +54,22 @@ export function activate(context: vscode.ExtensionContext) {
                         // interface
                         vscode.workspace.fs.writeFile(vscode.Uri.file(_interface), Buffer.from(""))
 
+                        // 创建路由文件
+                        if (e.path.indexOf("views") !== -1) {
+                              const routePath = e.path.split("views")[0] + "views"
+                              console.log(routePath, "-------------")
+                              setTimeout(() => {
+                                    createRouters(routePath)
+                              }, 500)
+                        }
+
                         vscode.window.showInformationMessage("文件夹和文件已创建")
                   }
             }
       })
 
       let copyRouters = vscode.commands.registerCommand("extension.createRouters", async (e) => {
-            const folderPath = e.path.split("/").pop()
-            if (folderPath !== "views") {
-                  vscode.window.showErrorMessage("当前目录不是views目录")
-                  throw new Error("当前目录不是views目录")
-            }
-
-            // 判断views是否存在pageRouters.ts 没有则创建
-            const routersPath = e.path + "/" + "pageRouters.ts"
-            if (!fs.existsSync(routersPath)) {
-                  fs.writeFileSync(routersPath, "")
-            }
-
-            // 询问是否覆盖
-            const result = await vscode.window.showInformationMessage("是否获取所有Router文件", "yes", "no")
-
-            // 路由引入数据
-            const routers: string[] = []
-            // 路由导出数据
-            const routerExport: string[] = []
-
-            findRouterFiles(e.path, routers, routerExport, result)
-
-            const body = "// 路由配置文件\n" + routers.join("\n") + "\n" + `export default [${routerExport}]`
-
-            // routersPath 文件中append router
-            fs.writeFileSync(routersPath, body)
-
-            vscode.window.showInformationMessage("路由文件已创建")
+            createRouters(e.path)
       })
 
       context.subscriptions.push(disposable)

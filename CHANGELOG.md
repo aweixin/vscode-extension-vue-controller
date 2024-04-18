@@ -1,5 +1,8 @@
 # vue-container 
 
+## 0.0.15
+- 优化 create vue controller 自动创建 pageRouter 并引入路由文件
+
 ## 0.0.14
 - 优化 create vue router 询问是否包含所有路由文件 no(会忽略 `authentication` 文件夹下面的路由文件 )
 
