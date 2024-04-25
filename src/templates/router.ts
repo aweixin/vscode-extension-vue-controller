@@ -9,13 +9,13 @@ export const routerTemplate = (path: string, folderPath: string) => {
 // ${folderPath} 自定义路由 
 export const ${_name} : Array<RouteRecordRaw> = [
       {
-            path: "/${folderPath}/index",
+            path: "${viewsAfter.join("/").replace("views", "")}/${folderPath}/index",
             name: "${folderPath}",
             component: () => import("${viewsName}/${folderPath}/view/index.vue"),
             meta: {
                   index: 1,
                   pageTitle: "${folderPath}",
-                  breadcrumbs: ["${folderPath}-index"],
+                  breadcrumbs: ["${viewsAfter.join("").replace("views", "")}-${folderPath}-index"],
             },
       },
 ]`

@@ -22,6 +22,8 @@ export function activate(context: vscode.ExtensionContext) {
 				router.ts	路由文件
 			config
 				config.ts	配置文件
+                  interface
+                        interface.ts 接口文件
 		*/
 
             if (input) {

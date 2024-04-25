@@ -1,5 +1,8 @@
 # vue-container 
 
+## 0.0.16
+- 优化 create vue controller 修复路由路径和title 按照路径生成
+
 ## 0.0.15
 - 优化 create vue controller 自动创建 pageRouter 并引入路由文件
 
