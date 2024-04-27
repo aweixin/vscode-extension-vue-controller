@@ -1,5 +1,14 @@
 # vue-container 
 
+
+## 0.0.16
+- 优化 create vue controller 
+      controller 文件中自动引入 rquest 文件
+      views 文件 自动生成 页面权限控制 和头部提示组件
+      index.vue 中 监听路由变化 自动请求数据
+      可以一次性创建多个项目文件夹 例如：index,role,user,menu,permission
+      
+
 ## 0.0.16
 - 优化 create vue controller 修复路由路径和title 按照路径生成
 
