@@ -1,7 +1,7 @@
 import * as vscode from "vscode"
 import * as fs from "fs"
 function validate(name: string): string | null {
-      if (/^[a-zA-Z-_]+$/.test(name)) {
+      if (/^[a-zA-Z-_,]+$/.test(name)) {
             return null
       }
       return "名称只能包含字母、中划线、下划线"
@@ -10,7 +10,7 @@ function validate(name: string): string | null {
 export const create = async () => {
       const input = await vscode.window.showInputBox({
             prompt: "请输入目录名称",
-            placeHolder: "请输入页面名称，如：index",
+            placeHolder: "如：index或者 index,user,role,permission",
             validateInput: validate,
       })
       return input
@@ -40,9 +40,9 @@ export const findRouterFiles = (viewDir: string, routerFiles: string[] = [], rou
       const dirs = getDirs(viewDir, result)
       console.log(dirs)
       dirs.forEach((dir) => {
-            const dirPathRouter = viewDir + "/" + dir + "/router/router.ts"
+            const dirPathRouter = viewDir + "/" + dir + "/router/index.ts"
             if (fs.existsSync(dirPathRouter)) {
-                  const dirFromPath = viewDir + "/" + dir + "/router/router"
+                  const dirFromPath = viewDir + "/" + dir + "/router/index"
                   const _formPath = "@/views" + dirFromPath.split("views")[1]
                   routerFiles.push(`import { ${dir}Routes } from "${_formPath}"`)
                   routerExport.push(`...${dir}Routes`)
