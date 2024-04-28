@@ -10,7 +10,7 @@ export const routerTemplate = (path: string, folderPath: string) => {
 export const ${_name} : Array<RouteRecordRaw> = [
       {
             path: "${viewsAfter.join("/").replace("views", "")}/${folderPath}/index",
-            name: "${folderPath}",
+            name: "${viewsAfter.join("").replace("views", "")}-${folderPath}-index",
             component: () => import("${viewsName}/${folderPath}/view/index.vue"),
             meta: {
                   index: 1,
