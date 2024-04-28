@@ -5,9 +5,9 @@ export const viewTemplate = (path: string, folderPath: string) => {
       const viewsName = "@/" + viewsAfter.join("/")
 
       return `<template>
-      <div>
-
-      </div>
+<KTShow value="" :show="true">
+      <toolbar />
+</KTShow>
 </template>
 
 

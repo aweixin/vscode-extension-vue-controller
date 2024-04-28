@@ -6,6 +6,7 @@ import { configTemplate } from "./templates/config"
 import { requestTemplate } from "./templates/request"
 import { routerTemplate } from "./templates/router"
 import { create, createRouters, findRouterFiles } from "./utils"
+import { componentsTemplate } from "./templates/components"
 
 export function activate(context: vscode.ExtensionContext) {
       let disposable = vscode.commands.registerCommand("extension.createFolderAndFile", async (e) => {
@@ -24,6 +25,10 @@ export function activate(context: vscode.ExtensionContext) {
 				config.ts	配置文件
                   interface
                         interface.ts 接口文件
+                  // 组件
+                  components
+                        index.vue
+                  
 		*/
 
             if (inputs) {
@@ -44,6 +49,7 @@ export function activate(context: vscode.ExtensionContext) {
                               const router = folderPath + "/router/index.ts"
                               const config = folderPath + "/config/index.ts"
                               const _interface = folderPath + "/interface/index.ts"
+                              const _components = folderPath + "/components/index.vue"
 
                               // view
                               vscode.workspace.fs.writeFile(vscode.Uri.file(view), Buffer.from(viewTemplate(e.path, input)))
@@ -57,6 +63,8 @@ export function activate(context: vscode.ExtensionContext) {
                               vscode.workspace.fs.writeFile(vscode.Uri.file(router), Buffer.from(routerTemplate(e.path, input)))
                               // interface
                               vscode.workspace.fs.writeFile(vscode.Uri.file(_interface), Buffer.from(""))
+                              // _components
+                              vscode.workspace.fs.writeFile(vscode.Uri.file(_components), Buffer.from(componentsTemplate(e.path, input)))
 
                               // 创建路由文件
                               if (e.path.indexOf("views") !== -1) {

@@ -1,5 +1,12 @@
 # vue-container 
 
+## 0.0.19
+- 优化 create vue controller 
+      默认组件
+      默认给 controller 文件中添加 yup 验证引入
+      
+
+
 
 ## 0.0.16
 - 优化 create vue controller 
