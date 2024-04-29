@@ -3,7 +3,7 @@ export const routerTemplate = (path: string, folderPath: string) => {
       // routerPath 查找views 后面所有
       const viewsAfter = routerPath.slice(routerPath.indexOf("views")).filter((c) => c != "views")
 
-      const viewsName = "@/" + viewsAfter.join("/")
+      const viewsName = "@/" + routerPath.slice(routerPath.indexOf("views")).join("/")
 
       const _name = folderPath + "Routes"
       return `import type { RouteRecordRaw } from "vue-router"

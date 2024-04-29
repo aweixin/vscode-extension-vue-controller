@@ -1,8 +1,8 @@
 export const viewTemplate = (path: string, folderPath: string) => {
       const routerPath = path.split("/")
       // routerPath 查找views 后面所有
-      const viewsAfter = routerPath.slice(routerPath.indexOf("views"))
-      const viewsName = "@/" + viewsAfter.join("/")
+      const viewsAfter = routerPath.slice(routerPath.indexOf("views")).filter((c) => c != "views")
+      const viewsName = "@/" + routerPath.slice(routerPath.indexOf("views")).join("/")
 
       return `<template>
 <KTShow value="" :show="true">
@@ -12,7 +12,7 @@ export const viewTemplate = (path: string, folderPath: string) => {
 
 
 
-<script setup lang="ts" name="${viewsAfter.join("").replace("views", "")}-${folderPath}-index">
+<script setup lang="ts" name="${viewsAfter.join("-")}-${folderPath}-index">
       import ${folderPath}Config from "${viewsName}/${folderPath}/config/index"
       import ${folderPath}Controller from "${viewsName}/${folderPath}/controller/index"
 
@@ -22,7 +22,7 @@ export const viewTemplate = (path: string, folderPath: string) => {
 
       // 监听路由变化
       watch(() => route.fullPath,() => {
-            if(route.name == "${viewsAfter.join("").replace("views", "")}-${folderPath}-index"){
+            if(route.name == "${viewsAfter.join("-")}-${folderPath}-index"){
             }
       }
     )

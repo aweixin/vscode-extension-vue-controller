@@ -2,8 +2,7 @@ export const controllerTemplate = (path: string, folderPath: string) => {
       const _name = folderPath + "Controller"
       const routerPath = path.split("/")
       // routerPath 查找views 后面所有
-      const viewsAfter = routerPath.slice(routerPath.indexOf("views"))
-      const viewsName = "@/" + viewsAfter.join("/")
+      const viewsName = "@/" + routerPath.slice(routerPath.indexOf("views")).join("/")
 
       return `import * as yup from "yup";
 import ${folderPath}Request from "${viewsName}/${folderPath}/request/index"
