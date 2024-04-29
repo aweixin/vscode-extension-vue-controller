@@ -38,7 +38,7 @@ export const getDirs = (path: string, result?: string) => {
 export const findRouterFiles = (viewDir: string, routerFiles: string[] = [], routerExport: string[] = [], result?: string) => {
       // 获取文件夹下的所有文件夹
       const dirs = getDirs(viewDir, result)
-      console.log(dirs)
+      console.log("%c [ dirs ]-41", "font-size:13px; background:pink; color:#bf2c9f;", dirs)
       dirs.forEach((dir) => {
             const dirPathRouter = viewDir + "/" + dir + "/router/index.ts"
             if (fs.existsSync(dirPathRouter)) {

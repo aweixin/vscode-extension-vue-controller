@@ -1,4 +1,8 @@
 # vue-container 
+## 0.0.22
+- 优化 create vue controller 
+      多层路由错误 修改
+      
 
 ## 0.0.19
 - 优化 create vue controller 

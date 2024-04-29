@@ -1,7 +1,8 @@
 export const routerTemplate = (path: string, folderPath: string) => {
       const routerPath = path.split("/")
       // routerPath 查找views 后面所有
-      const viewsAfter = routerPath.slice(routerPath.indexOf("views"))
+      const viewsAfter = routerPath.slice(routerPath.indexOf("views")).filter((c) => c != "views")
+
       const viewsName = "@/" + viewsAfter.join("/")
 
       const _name = folderPath + "Routes"
@@ -10,12 +11,12 @@ export const routerTemplate = (path: string, folderPath: string) => {
 export const ${_name} : Array<RouteRecordRaw> = [
       {
             path: "${viewsAfter.join("/").replace("views", "")}/${folderPath}/index",
-            name: "${viewsAfter.join("").replace("views", "")}-${folderPath}-index",
+            name: "${viewsAfter.join("-")}-${folderPath}-index",
             component: () => import("${viewsName}/${folderPath}/view/index.vue"),
             meta: {
                   index: 1,
                   pageTitle: "${folderPath}",
-                  breadcrumbs: ["${viewsAfter.join("").replace("views", "")}-${folderPath}-index"],
+                  breadcrumbs: ["${viewsAfter.join("-")}-${folderPath}-index"],
             },
       },
 ]`
