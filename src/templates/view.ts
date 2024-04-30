@@ -28,15 +28,21 @@ export const viewTemplate = (path: string, folderPath: string) => {
       });
 
       // 监听路由变化
+      const fullPath = ref(route.fullPath);
       watch(() => route.fullPath,() => {
-            if(route.name == "${_name}"){
+            if(route.name == "${_name}" && fullPath.value != route.fullPath){
                   ${folderPath}Controller.query(route.query.page)
+                  fullPath.value = route.fullPath
             }
       }
     )
 
 
-
+onUnmounted(() => {
+  if (${folderPath}Controller.id && ${folderPath}Controller.id.value) {
+    ${folderPath}Controller.id.value = "";
+  }
+});
 </script>
 
 <style lang="scss" scoped>
