@@ -7,6 +7,7 @@ import { requestTemplate } from "./templates/request"
 import { routerTemplate } from "./templates/router"
 import { create, createRouters, findRouterFiles } from "./utils"
 import { componentsTemplate } from "./templates/components"
+import { filterTemplate } from "./templates/filter"
 
 export function activate(context: vscode.ExtensionContext) {
       let disposable = vscode.commands.registerCommand("extension.createFolderAndFile", async (e) => {
@@ -50,6 +51,7 @@ export function activate(context: vscode.ExtensionContext) {
                               const config = folderPath + "/config/index.ts"
                               const _interface = folderPath + "/interface/index.ts"
                               const _components = folderPath + "/components/index.vue"
+                              const _filter = folderPath + "/components/Filter.vue"
 
                               // view
                               vscode.workspace.fs.writeFile(vscode.Uri.file(view), Buffer.from(viewTemplate(e.path, input)))
@@ -65,6 +67,8 @@ export function activate(context: vscode.ExtensionContext) {
                               vscode.workspace.fs.writeFile(vscode.Uri.file(_interface), Buffer.from(""))
                               // _components
                               vscode.workspace.fs.writeFile(vscode.Uri.file(_components), Buffer.from(componentsTemplate(e.path, input)))
+                              // filterTemplate
+                              vscode.workspace.fs.writeFile(vscode.Uri.file(_filter), Buffer.from(filterTemplate()))
 
                               // 创建路由文件
                               if (e.path.indexOf("views") !== -1) {

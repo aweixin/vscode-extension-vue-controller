@@ -1,6 +1,7 @@
 export const requestTemplate = (folderPath: string) => {
       const _name = folderPath + "Request"
-      return `class ${_name} {
+      return `import ApiService from "@/core/services/ApiService";
+class ${_name} {
       constructor() {}
       index() {
             console.log("hello world!")

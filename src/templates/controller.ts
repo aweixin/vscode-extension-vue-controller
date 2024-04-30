@@ -1,10 +1,12 @@
 export const controllerTemplate = (path: string, folderPath: string) => {
-      const _name = folderPath + "Controller";
-      const routerPath = path.split("/");
+      const _name = folderPath + "Controller"
+      const routerPath = path.split("/")
       // routerPath 查找views 后面所有
-      const viewsName = "@/" + routerPath.slice(routerPath.indexOf("views")).join("/");
+      const viewsName = "@/" + routerPath.slice(routerPath.indexOf("views")).join("/")
 
-      return `import * as yup from "yup";
+      return `import type { FormType } from "@/components/custom/form";
+import alertModal from "@/core/plugins/alertModal";
+import * as yup from "yup";
 import ${folderPath}Request from "${viewsName}/${folderPath}/request/index"
 class ${_name} {
 
@@ -21,9 +23,10 @@ class ${_name} {
 
 
       // 增加
-      create(){
+     async create(){
             this.updateKey.value = '';
-
+            await this.setForm();
+            this.show.value = true;
       }
       // 删除
       async delete(){
@@ -34,11 +37,35 @@ class ${_name} {
 
             // 请求删除接口
 
-
+            // if(rs.code == 0){
+            //       alertModal.dialogcustom("删除成功", "success");
+            //       this.query(this.list.value?.current);
+            // }
       }
       // 更新
-      update(){
+      async update(id:number){
+            this.updateKey.value = id+'';
+            await this.setForm();
 
+
+            // 请求详情接口 并赋值给form
+            this.form.value?.fields.map((item) => {
+                  // item.value = rs.data[item.name];
+            });
+            
+            this.form.value?.fields.push({
+                  type: "input",
+                  value: id,
+                  label: "id",
+                  name: "id",
+                  props: {
+                  rowStyle: {
+                  display: "none",
+                  },
+                  },
+            });
+
+            this.show.value = true;
       }
       // 查询
       async query(page?:number){
@@ -73,6 +100,5 @@ class ${_name} {
 }
 export default function(){
       return new ${_name}();
-}`;
-
-};
+}`
+}

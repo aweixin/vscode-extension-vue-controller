@@ -1,5 +1,6 @@
 import * as vscode from "vscode"
 import * as fs from "fs"
+import exp from "constants"
 function validate(name: string): string | null {
       if (/^[a-zA-Z-_,]+$/.test(name)) {
             return null
@@ -38,14 +39,20 @@ export const getDirs = (path: string, result?: string) => {
 export const findRouterFiles = (viewDir: string, routerFiles: string[] = [], routerExport: string[] = [], result?: string) => {
       // 获取文件夹下的所有文件夹
       const dirs = getDirs(viewDir, result)
-      console.log("%c [ dirs ]-41", "font-size:13px; background:pink; color:#bf2c9f;", dirs)
       dirs.forEach((dir) => {
             const dirPathRouter = viewDir + "/" + dir + "/router/index.ts"
             if (fs.existsSync(dirPathRouter)) {
                   const dirFromPath = viewDir + "/" + dir + "/router/index"
                   const _formPath = "@/views" + dirFromPath.split("views")[1]
-                  routerFiles.push(`import { ${dir}Routes } from "${_formPath}"`)
-                  routerExport.push(`...${dir}Routes`)
+
+                  const dirFromPath1 = viewDir + "/" + dir + "/index/router"
+                  const resultName = dirFromPath1.split("views")[1].split("/")
+                  // 删除第一个数组
+                  resultName.shift()
+                  console.log("%c [ resultName ]-50", "font-size:13px; background:pink; color:#bf2c9f;", resultName)
+
+                  routerFiles.push(`import { ${camelCase(resultName)} } from "${_formPath}"`)
+                  routerExport.push(`...${camelCase(resultName)}`)
             } else {
                   // 存在子目录
                   findRouterFiles(viewDir + "/" + dir, routerFiles, routerExport)
@@ -80,4 +87,12 @@ export const createRouters = async (_path: string) => {
       fs.writeFileSync(routersPath, body)
 
       vscode.window.showInformationMessage("路由文件已创建")
+}
+
+export const camelCase = (arr: Array<string>) => {
+      let result = arr[0]
+      for (let i = 1; i < arr.length; i++) {
+            result += arr[i].charAt(0).toUpperCase() + arr[i].slice(1)
+      }
+      return result
 }
