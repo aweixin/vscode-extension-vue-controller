@@ -47,11 +47,16 @@ export const componentsTemplate = (path: string, folderPath: string) => {
 const show = ref(false);
 const emit = defineEmits(["update:modelValue"]);
 import { initializeComponents } from "@/core/plugins/keenthemes";
-import controller from "../controller/index";
 
 defineProps({
+  controller:{
+    type:Object,
+    required:true,
+    default:()=>{}
+  },
   title: {
     type: String,
+    required:true,
     default: "",
   },
 });

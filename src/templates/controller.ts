@@ -98,7 +98,6 @@ class ${_name} {
 
 
 }
-export default function(){
-      return new ${_name}();
-}`
+export default new ${_name}();
+`
 }
