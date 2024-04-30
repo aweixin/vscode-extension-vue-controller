@@ -30,7 +30,7 @@ class ${_name} {
       }
       // 删除
       async delete(){
-            const r = await alertModel.confirm("确定要删除？");
+            const r = await alertModal.confirm("确定要删除？");
             if(!r.value){
                   return false;
             }
