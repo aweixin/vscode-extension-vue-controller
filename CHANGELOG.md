@@ -1,5 +1,7 @@
 # vue-container 
 
+## 0.0.31
+- 删除控制器导出的时候后拽.ts
 
 ## 0.0.31
 - 全局controller 方便引入

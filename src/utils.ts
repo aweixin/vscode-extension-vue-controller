@@ -77,7 +77,7 @@ export const findRouterFiles = (viewDir: string, routerFiles: string[] = [], rou
                               const resultName = dirFromPath1.split("views")[1].split("/")
                               // 删除第一个数组
                               resultName.shift()
-                              routerFiles.push(`import  ${camelCase(resultName)}  from "${_formPath}"`)
+                              routerFiles.push(`import  ${camelCase(resultName)}  from "${_formPath.replace(".ts", "")}"`)
                               routerExport.push(`${camelCase(resultName)}`)
                         })
                   } else {
