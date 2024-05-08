@@ -5,7 +5,7 @@ import { controllerTemplate } from "./templates/controller"
 import { configTemplate } from "./templates/config"
 import { requestTemplate } from "./templates/request"
 import { routerTemplate } from "./templates/router"
-import { create, createRouters, findRouterFiles } from "./utils"
+import { create, createRouters, createControllers, findRouterFiles } from "./utils"
 import { componentsTemplate } from "./templates/components"
 import { filterTemplate } from "./templates/filter"
 
@@ -50,8 +50,8 @@ export function activate(context: vscode.ExtensionContext) {
                               const router = folderPath + "/router/index.ts"
                               const config = folderPath + "/config/index.ts"
                               const _interface = folderPath + "/interface/index.ts"
-                              const _components = folderPath + "/components/index.vue"
-                              const _filter = folderPath + "/components/Filter.vue"
+                              // const _components = folderPath + "/components/index.vue"
+                              // const _filter = folderPath + "/components/Filter.vue"
 
                               // view
                               vscode.workspace.fs.writeFile(vscode.Uri.file(view), Buffer.from(viewTemplate(e.path, input)))
@@ -66,9 +66,9 @@ export function activate(context: vscode.ExtensionContext) {
                               // interface
                               vscode.workspace.fs.writeFile(vscode.Uri.file(_interface), Buffer.from(""))
                               // _components
-                              vscode.workspace.fs.writeFile(vscode.Uri.file(_components), Buffer.from(componentsTemplate(e.path, input)))
-                              // filterTemplate
-                              vscode.workspace.fs.writeFile(vscode.Uri.file(_filter), Buffer.from(filterTemplate()))
+                              // vscode.workspace.fs.writeFile(vscode.Uri.file(_components), Buffer.from(componentsTemplate(e.path, input)))
+                              // // filterTemplate
+                              // vscode.workspace.fs.writeFile(vscode.Uri.file(_filter), Buffer.from(filterTemplate()))
 
                               // 创建路由文件
                               if (e.path.indexOf("views") !== -1) {
@@ -86,7 +86,7 @@ export function activate(context: vscode.ExtensionContext) {
             }
       })
 
-      let copyRouters = vscode.commands.registerCommand("extension.createRouters", async (e) => {
+      let copyRouters = vscode.commands.registerCommand("extension.createRoutersController", (e) => {
             console.log("🚀 ~ e ~ e:", e.path)
             createRouters(e.path)
       })

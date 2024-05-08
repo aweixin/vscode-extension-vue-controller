@@ -36,26 +36,54 @@ export const getDirs = (path: string, result?: string) => {
  * @param routerFiles 路由文件
  * @param routerExport 路由导出
  */
-export const findRouterFiles = (viewDir: string, routerFiles: string[] = [], routerExport: string[] = [], result?: string) => {
+export const findRouterFiles = (viewDir: string, routerFiles: string[] = [], routerExport: string[] = [], fileType: string, result?: string) => {
       // 获取文件夹下的所有文件夹
       const dirs = getDirs(viewDir, result)
       dirs.forEach((dir) => {
-            const dirPathRouter = viewDir + "/" + dir + "/router/index.ts"
-            if (fs.existsSync(dirPathRouter)) {
-                  const dirFromPath = viewDir + "/" + dir + "/router/index"
-                  const _formPath = "@/views" + dirFromPath.split("views")[1]
+            // 路由文件
+            if (fileType == "router") {
+                  const dirPathRouter = viewDir + "/" + dir + "/" + fileType + "/index.ts"
+                  if (fs.existsSync(dirPathRouter)) {
+                        const dirFromPath = viewDir + "/" + dir + "/" + fileType + "/index"
+                        const _formPath = "@/views" + dirFromPath.split("views")[1]
 
-                  const dirFromPath1 = viewDir + "/" + dir + "/index/router"
-                  const resultName = dirFromPath1.split("views")[1].split("/")
-                  // 删除第一个数组
-                  resultName.shift()
-                  console.log("%c [ resultName ]-50", "font-size:13px; background:pink; color:#bf2c9f;", resultName)
+                        let dirFromPath1 = viewDir + "/" + dir + "/index/router"
 
-                  routerFiles.push(`import { ${camelCase(resultName)} } from "${_formPath}"`)
-                  routerExport.push(`...${camelCase(resultName)}`)
-            } else {
-                  // 存在子目录
-                  findRouterFiles(viewDir + "/" + dir, routerFiles, routerExport)
+                        const resultName = dirFromPath1.split("views")[1].split("/")
+                        // 删除第一个数组
+                        resultName.shift()
+
+                        if (fileType == "router") {
+                              routerFiles.push(`import { ${camelCase(resultName)} } from "${_formPath}"`)
+                              routerExport.push(`...${camelCase(resultName)}`)
+                        }
+                  } else {
+                        // 存在子目录
+                        findRouterFiles(viewDir + "/" + dir, routerFiles, routerExport, fileType)
+                  }
+            }
+
+            if (fileType == "controller") {
+                  const mule = viewDir + "/" + dir + "/" + fileType
+                  // 判断目录是否存在
+                  if (fs.existsSync(mule)) {
+                        // 获取当前目录下所有文件
+                        const files = fs.readdirSync(mule)
+
+                        files.map((file) => {
+                              const dirFromPath = viewDir + "/" + dir + "/" + fileType + "/" + file
+                              const _formPath = "@/views" + dirFromPath.split("views")[1]
+                              let dirFromPath1 = dirFromPath.replace(".ts", "")
+                              const resultName = dirFromPath1.split("views")[1].split("/")
+                              // 删除第一个数组
+                              resultName.shift()
+                              routerFiles.push(`import  ${camelCase(resultName)}  from "${_formPath}"`)
+                              routerExport.push(`${camelCase(resultName)}`)
+                        })
+                  } else {
+                        // 不纯
+                        findRouterFiles(viewDir + "/" + dir, routerFiles, routerExport, fileType)
+                  }
             }
       })
 }
@@ -70,8 +98,14 @@ export const createRouters = async (_path: string) => {
 
       // 判断views是否存在pageRouters.ts 没有则创建
       const routersPath = _path + "/" + "pageRouters.ts"
+      const pageController = _path + "/" + "pageController.ts"
+      // 创建路由引入文件
       if (!fs.existsSync(routersPath)) {
             fs.writeFileSync(routersPath, "")
+      }
+      // 创建控制器文件
+      if (!fs.existsSync(pageController)) {
+            fs.writeFileSync(pageController, "")
       }
 
       // 路由引入数据
@@ -79,14 +113,22 @@ export const createRouters = async (_path: string) => {
       // 路由导出数据
       const routerExport: string[] = []
 
-      findRouterFiles(_path, routers, routerExport, "no")
+      // controller引入数据
+      const controllers: string[] = []
+      // controller引入数据导出数据
+      const controllerExport: string[] = []
 
-      const body = "// 路由配置文件\n" + routers.join("\n") + "\n" + `export default [${routerExport}]`
+      findRouterFiles(_path, routers, routerExport, "router", "no")
+      findRouterFiles(_path, controllers, controllerExport, "controller", "no")
+
+      const routerBody = "// 路由配置文件\n" + routers.join("\n") + "\n" + `export default [${routerExport}]`
+      const controllerBody = "// 全局控制器\n" + controllers.join("\n") + "\n" + `export default {${controllerExport}}`
 
       // routersPath 文件中append router
-      fs.writeFileSync(routersPath, body)
+      fs.writeFileSync(routersPath, routerBody)
+      fs.writeFileSync(pageController, controllerBody)
 
-      vscode.window.showInformationMessage("路由文件已创建")
+      vscode.window.showInformationMessage("路由,控制器文件已创建")
 }
 
 export const camelCase = (arr: Array<string>) => {

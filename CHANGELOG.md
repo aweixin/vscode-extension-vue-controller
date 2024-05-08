@@ -1,4 +1,11 @@
 # vue-container 
+
+
+## 0.0.31
+- 全局controller 方便引入
+      移除默认的组件
+      新增代码片段
+
 ## 0.0.22
 - 优化 create vue controller 
       多层路由错误 修改

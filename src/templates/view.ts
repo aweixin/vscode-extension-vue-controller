@@ -16,10 +16,6 @@ export const viewTemplate = (path: string, folderPath: string) => {
 <script setup lang="ts" name="${_name}">
       import ${folderPath}Config from "${viewsName}/${folderPath}/config/index"
       import ${folderPath}Controller from "${viewsName}/${folderPath}/controller/index"
-      // 筛选
-      import Filter from "../components/Filter.vue";
-      // 更新or创建
-      import Action from "../components/index.vue";
 
       const route = useRoute();
 

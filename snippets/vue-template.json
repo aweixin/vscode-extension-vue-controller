@@ -1,0 +1,152 @@
+{
+      "f-form": {
+            "prefix": "f-form",
+            "body": [
+                  "<f-form",
+                  "\t:rules=\"controller.rules\"",
+                  "\tlabelPosition=\"left\"",
+                  "\tlabelWidth=\"100px\"",
+                  "\tv-model=\"controller.formData.value\"",
+                  "\t@onSubmit=\"onSubmit\"",
+                  ">",
+                  "\t<template #actions>",
+                  "\t\t<div class=\"modal-footer flex justify-center\">",
+                  "\t\t<button",
+                  "\t\t\ttype=\"button\"",
+                  "\t\t\tclass=\"btn btn-light me-3\"",
+                  "\t\t\tdata-bs-dismiss=\"modal\"",
+                  "\t\t\t@click=\"emit('update:modelValue', false)\">",
+                  "\t\t\t取消",
+                  "\t\t</button>",
+                  "\t\t<button",
+                  "\t\t\tref=\"submitButtonRef\"",
+                  "\t\t\ttype=\"submit\"",
+                  "\t\t\tclass=\"btn btn-primary\"",
+                  "\t\t\tdata-kt-menu-dismiss=\"true\">",
+                  "\t\t\t<span class=\"indicator-label\">提交</span>",
+                  "\t\t\t<span class=\"indicator-progress\">",
+                  "\t\t\t\t提交中...",
+                  "\t\t\t\t<span",
+                  "\t\t\t\t\tclass=\"spinner-border spinner-border-sm align-middle ms-2\"",
+                  "\t\t\t\t></span>",
+                  "\t\t\t</span>",
+                  "\t\t</button>",
+                  "\t</div>",
+                  "</template>",
+                  "</f-form>"
+            ],
+            "description": "创建一个新的f-form"
+      },
+      "f-input": {
+            "prefix": "f-input",
+            "body": ["<f-input", "\ttype=\"text\"", "\tplaceholder=\"请输入$1\"", "\tname=\"$2\"", "/>"],
+            "description": "创建一个新的f-input"
+      },
+      "f-textarea": {
+            "prefix": "f-textarea",
+            "body": ["<f-textarea", "\tplaceholder=\"请输入$1\"", "\tname=\"$2\"", "/>"],
+            "description": "创建一个新的f-textarea"
+      },
+      "f-radio-group": {
+            "prefix": "f-radio-group",
+            "body": [
+                  "<f-radio-group v-model=\"$1\">",
+                  "\t<template v-for=\"(item, index) in $2\" :key=\"index\">",
+                  "\t\t<f-radio :value=\"item.id\" name=\"$3\">{{item.text}} </f-radio>",
+                  "\t</template>",
+                  "</f-radio-group>"
+            ],
+            "description": "创建一个新的f-radio-group"
+      },
+      "f-switch": {
+            "prefix": "f-switch",
+            "body": ["<f-switch name=\"$1\" v-model=\"$2\">$3</f-switch>"],
+            "description": "创建一个新的f-switch"
+      },
+      "f-date": {
+            "prefix": "f-date",
+            "body": [
+                  "<f-date",
+                  "\tname=\"$1\"",
+                  "\tplaceholder=\"请选择日期\"",
+                  "\tv-model=\"$2\"",
+                  "\tv-model:start=\"$3\"",
+                  "\tv-model:end=\"$4\"",
+                  "\ttype=\"$5\"",
+                  "/>"
+            ],
+            "description": "创建一个新的f-date"
+      },
+      "f-select": {
+            "prefix": "f-select",
+            "body": [
+                  "<f-select",
+                  "\tname=\"$1\"",
+                  "\t:multiple=\"$2\"",
+                  "\tclass=\"$3\"",
+                  "\tv-model=\"$4\"",
+                  "\t:options=\"$5\"",
+                  "\tplaceholder=\"请选择$6\"",
+                  "\t:searchable=\"false\"",
+                  "/>"
+            ],
+            "description": "创建select"
+      },
+      "f-checkbox-group": {
+            "prefix": "f-checkbox-group",
+            "body": [
+                  "<f-checkbox-group v-model=\"$1\">",
+                  "\t<template v-for=\"(item, index) in $2\" :key=\"index\">",
+                  "\t\t<f-checkbox :value=\"item.id\" name=\"$3\">{{item.text}}</f-checkbox>",
+                  "\t</template>",
+                  "</f-checkbox-group>"
+            ],
+            "description": "创建一个多选框"
+      },
+      "f-form-item": {
+            "prefix": "f-form-item",
+            "body": ["<f-form-item label=\"$1\" name=\"$2\" labelVerticalAlign=\"center\" labelAlign=\"start\" required></f-form-item>"],
+            "description": "创建一个新的f-form-item"
+      },
+      "f-upload": {
+            "prefix": "f-upload",
+            "body": ["<f-upload", "\tname=\"$1\"", "\tv-model=\"$2\"", "\t:multiple=\"$3\"", "\taccept=\"$4\"", "\t:limit=\"$5\"", "/>"],
+            "description": "创建一个新的f-upload 上传附件"
+      },
+      "f-submitButtonRef": {
+            "prefix": "f-submitButtonRef",
+            "body": [
+                  "const submitButtonRef = ref();",
+                  "const onSubmit = async (values: any) => {",
+                  "\tsubmitButton(submitButtonRef.value);",
+                  "\tawait controller.$1(values);",
+                  "\tsubmitButtonEnd(submitButtonRef.value);",
+                  "};"
+            ],
+            "description": "创建一个新的submitButtonRef"
+      },
+      "f-form-filter": {
+            "prefix": "f-form-filter",
+            "body": [
+                  "<f-form labelPosition=\"left\" labelWidth=\"100px\" v-model=\"controller.filterForm.value\" @\"关键字\" prop=\"keyword\">",
+                  "  <f-input name=\"keyword\" placeholder=\"请输入关键字\" />",
+                  "</f-form>",
+                  "",
+                  "<template #actions>",
+                  "  <div class=\"modal-footer flex justify-center\">",
+                  "    <button type=\"button\" class=\"btn btn-light me-3\" data-bs-dismiss=\"modal\" @click=\"controller.resetFilter\">",
+                  "      重置",
+                  "    </button>",
+                  "    <button ref=\"submitButtonRef\" type=\"submit\" class=\"btn btn-primary\" data-kt-menu-dismiss=\"true\">",
+                  "      <span class=\"indicator-label\">搜索</span>",
+                  "      <span class=\"indicator-progress\">",
+                  "        搜索中...",
+                  "        <span class=\"spinner-border spinner-border-sm align-middle ms-2\"></span>",
+                  "      </span>",
+                  "    </button>",
+                  "  </div>",
+                  "</template>"
+            ],
+            "description": "创建一个重置form"
+      }
+}

@@ -10,7 +10,7 @@ export const componentsTemplate = (path: string, folderPath: string) => {
     >
       <div class="modal-content">
         <div class="modal-header py-3">
-          <h5 class="modal-title">{{ title }}</h5>
+          <h5 class="modal-title">标题</h5>
           <div
             class="btn btn-icon btn-sm btn-active-light-primary ms-2"
             @click="emit('update:modelValue', false)"
@@ -31,12 +31,7 @@ export const componentsTemplate = (path: string, folderPath: string) => {
           data-kt-scroll-offset="300px"
         >
           <!-- form -->
-          <!-- v-bind="createMenu.form.value.option" -->
-          <!-- v-model="permissionController.updatePermissionsForm.value?.fields" -->
-          <KTForm
-            :fields="controller.form.value?.fields"
-            :onSubmit="controller.form.value?.onSubmit"
-          />
+
         </div>
       </div>
     </Modal>
@@ -47,19 +42,6 @@ export const componentsTemplate = (path: string, folderPath: string) => {
 const show = ref(false);
 const emit = defineEmits(["update:modelValue"]);
 import { initializeComponents } from "@/core/plugins/keenthemes";
-
-defineProps({
-  controller:{
-    type:Object,
-    required:true,
-    default:()=>{}
-  },
-  title: {
-    type: String,
-    required:true,
-    default: "",
-  },
-});
 
 onMounted(() => {
   initializeComponents();
