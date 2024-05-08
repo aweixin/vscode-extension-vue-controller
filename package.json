@@ -33,6 +33,9 @@
             "url": "https://github.com/aweixin/vscode-extension-vue-controller"
       },
       "main": "./out/extension.js",
+      "activationEvents": [
+            "onLanguage"
+      ],
       "contributes": {
             "snippets": [
                   {

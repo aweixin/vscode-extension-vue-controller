@@ -5,7 +5,7 @@ import { controllerTemplate } from "./templates/controller"
 import { configTemplate } from "./templates/config"
 import { requestTemplate } from "./templates/request"
 import { routerTemplate } from "./templates/router"
-import { create, createRouters, createControllers, findRouterFiles } from "./utils"
+import { create, createRouters, findRouterFiles } from "./utils"
 import { componentsTemplate } from "./templates/components"
 import { filterTemplate } from "./templates/filter"
 
