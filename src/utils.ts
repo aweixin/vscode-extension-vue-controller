@@ -131,8 +131,8 @@ export const createRouters = async (_path: string) => {
       findRouterFiles(_path, configs, configExport, "config", "no")
 
       const routerBody = "// 路由配置文件\n" + routers.join("\n") + "\n" + `export default [${routerExport}]`
-      const controllerBody = "// 全局控制器\n" + controllers.join("\n") + "\n" + `export default {${controllerExport}}`
-      const configBody = "// 全局控制器\n" + configs.join("\n") + "\n" + `export default {${configExport}}`
+      const controllerBody = "// 全局控制器\n" + controllers.join("\n") + "\n" + `export {${controllerExport}}`
+      const configBody = "// 全局控制器\n" + configs.join("\n") + "\n" + `export {${configExport}}`
 
       // routersPath 文件中append router
       fs.writeFileSync(routersPath, routerBody)

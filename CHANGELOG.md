@@ -1,4 +1,9 @@
 # vue-container 
+
+## 0.0.33
+- export default
+
+
 ## 0.0.33
 - 新增config 全局配置导入
 
