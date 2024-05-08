@@ -63,7 +63,7 @@ export const findRouterFiles = (viewDir: string, routerFiles: string[] = [], rou
                   }
             }
 
-            if (fileType == "controller") {
+            if (fileType == "controller" || fileType == "config") {
                   const mule = viewDir + "/" + dir + "/" + fileType
                   // 判断目录是否存在
                   if (fs.existsSync(mule)) {
@@ -99,6 +99,7 @@ export const createRouters = async (_path: string) => {
       // 判断views是否存在pageRouters.ts 没有则创建
       const routersPath = _path + "/" + "pageRouters.ts"
       const pageController = _path + "/" + "pageController.ts"
+      const pageConfig = _path + "/" + "pageConfig.ts"
       // 创建路由引入文件
       if (!fs.existsSync(routersPath)) {
             fs.writeFileSync(routersPath, "")
@@ -106,6 +107,10 @@ export const createRouters = async (_path: string) => {
       // 创建控制器文件
       if (!fs.existsSync(pageController)) {
             fs.writeFileSync(pageController, "")
+      }
+      // 创建配置文件
+      if (!fs.existsSync(pageConfig)) {
+            fs.writeFileSync(pageConfig, "")
       }
 
       // 路由引入数据
@@ -118,15 +123,21 @@ export const createRouters = async (_path: string) => {
       // controller引入数据导出数据
       const controllerExport: string[] = []
 
+      const configs: string[] = []
+      const configExport: string[] = []
+
       findRouterFiles(_path, routers, routerExport, "router", "no")
       findRouterFiles(_path, controllers, controllerExport, "controller", "no")
+      findRouterFiles(_path, configs, configExport, "config", "no")
 
       const routerBody = "// 路由配置文件\n" + routers.join("\n") + "\n" + `export default [${routerExport}]`
       const controllerBody = "// 全局控制器\n" + controllers.join("\n") + "\n" + `export default {${controllerExport}}`
+      const configBody = "// 全局控制器\n" + configs.join("\n") + "\n" + `export default {${configExport}}`
 
       // routersPath 文件中append router
       fs.writeFileSync(routersPath, routerBody)
       fs.writeFileSync(pageController, controllerBody)
+      fs.writeFileSync(pageConfig, configBody)
 
       vscode.window.showInformationMessage("路由,控制器文件已创建")
 }
