@@ -119,24 +119,24 @@ export const createRouters = async (_path: string) => {
       const routerExport: string[] = []
 
       // controller引入数据
-      const controllers: string[] = []
+      // const controllers: string[] = []
       // controller引入数据导出数据
-      const controllerExport: string[] = []
+      // const controllerExport: string[] = []
 
       const configs: string[] = []
       const configExport: string[] = []
 
       findRouterFiles(_path, routers, routerExport, "router", "no")
-      findRouterFiles(_path, controllers, controllerExport, "controller", "no")
+      // findRouterFiles(_path, controllers, controllerExport, "controller", "no")
       findRouterFiles(_path, configs, configExport, "config", "no")
 
       const routerBody = "// 路由配置文件\n" + routers.join("\n") + "\n" + `export default [${routerExport}]`
-      const controllerBody = "// 全局控制器\n" + controllers.join("\n") + "\n" + `export {${controllerExport}}`
+      // const controllerBody = "// 全局控制器\n" + controllers.join("\n") + "\n" + `export {${controllerExport}}`
       const configBody = "// 全局控制器\n" + configs.join("\n") + "\n" + `export {${configExport}}`
 
       // routersPath 文件中append router
       fs.writeFileSync(routersPath, routerBody)
-      fs.writeFileSync(pageController, controllerBody)
+      // fs.writeFileSync(pageController, controllerBody)
       fs.writeFileSync(pageConfig, configBody)
 
       vscode.window.showInformationMessage("路由,控制器文件已创建")
