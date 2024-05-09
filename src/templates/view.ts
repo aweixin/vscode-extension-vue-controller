@@ -35,9 +35,6 @@ export const viewTemplate = (path: string, folderPath: string) => {
 
 
 onUnmounted(() => {
-  if (${folderPath}Controller.id && ${folderPath}Controller.id.value) {
-    ${folderPath}Controller.id.value = "";
-  }
 });
 </script>
 
