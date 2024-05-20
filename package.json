@@ -2,7 +2,7 @@
       "name": "vue-controller",
       "displayName": "vue-controller",
       "description": "本插件是基于vsCode创建vue 项目的插件 ，模拟 `Laravel` 的 一键创建：控制器、模型、视图、路由、配置文件等操作",
-      "version": "0.0.36",
+      "version": "0.0.37",
       "icon": "assets/logo.jpeg",
       "publisher": "aweixin",
       "engines": {
