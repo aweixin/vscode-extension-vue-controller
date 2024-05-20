@@ -1,4 +1,28 @@
 {
+      "f-table": {
+            "prefix": "f-table",
+            "body": [
+                  "<KTtable",
+                  "\t:header=\"tableHeader\"",
+                  "\t:data=\"data\"",
+                  "\t:loading=\"loading\">",
+                  "",
+                  "\t<template v-slot:id=\"{ row: data }\">",
+                  "\t\t{{ data.id }}",
+                  "\t</template>",
+                  "",
+                  "\t<template v-slot:name=\"{ row: data }\">",
+                  "\t\t{{ data.name }}",
+                  "\t</template>",
+                  "",
+                  "\t<template v-slot:action=\"{ row: data }\">",
+                  "\t\t",
+                  "\t</template>",
+                  "",
+                  "</KTtable>"
+            ],
+            "description": "Vue KTtable component"
+      },
       "f-form": {
             "prefix": "f-form",
             "body": [
